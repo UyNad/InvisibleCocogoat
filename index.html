@@ -22,7 +22,7 @@ but this way is easier to debug. I'm not terribly concerned about people using d
 </head>
 
 <div id="space" class="hider">	
-	<img src="ganyu-small.png" id="cocogoat" class="hider"/>
+	<img src="bella.jpg" id="cocogoat" class="hider"/>
 	<div id="cover" onclick="find()" class="hider"></div>	
 	<div id="promptButton" onclick="startPlaying()">
 	Hunt a Cocogoat. Please and Thank You.
@@ -40,7 +40,7 @@ but this way is easier to debug. I'm not terribly concerned about people using d
 	<div id="mute" class="navigation" onclick="toggleMute()">Mute</div>
 </div>
 <div id="info" class="navigation">
-	<div id="counter" class="navigation">Cocogoats found: 0</div>
+	<div id="counter" class="navigation">Bella found: 0</div>
 	<div id="instructions" class="navigation" onclick="viewInstructions()">Instructions</div>
 </div>
 
@@ -330,11 +330,11 @@ function updateNumberOfCocogoatsFound() {
 		//check if localstorage exists, and check if there is a number stored
 		if (!isNaN(localStorage.getItem("cocogoatCount")) && (localStorage.getItem("cocogoatCount"))) {
 			//if number is stored, set counter to match.
-			document.getElementById("counter").textContent = ("Cocogoats found: " + Number(localStorage.getItem("cocogoatCount")));
+			document.getElementById("counter").textContent = ("Bella found: " + Number(localStorage.getItem("cocogoatCount")));
 		} else {
 			//if no number is stored, set counter to 0
 			localStorage.setItem("cocogoatCount", 0);
-			document.getElementById("counter").textContent = ("Cocogoats found: 0");
+			document.getElementById("counter").textContent = ("Bella found: 0");
 		}
 	} else {
 		//the user doesn't need to know about the useless number they're missing out on. Hide the cocogoat counter.
