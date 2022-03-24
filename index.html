@@ -1,20 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-us">
 <meta charset="utf-8">
-<!--
-Inspired by: https://findtheinvisiblecow.com/
-
-Unlike invisible cow which plays different sound files based on cursor distance from the cow,
-this game plays a single file with varying volume and L-R pan depending on position relative to the cocogoat.
-
-The image of Ganyu is covered by a blank div "cover" because:
-- click events on hidden elements don't work
-- opacity 0 images can be interacted with in unexpected ways.
-
-In other words, an additional element z-indexed on top of the image was required. 
-Or I could have simply made the image not even exist and only added the content when the mouse was clicked at certain coordinates,
-but this way is easier to debug. I'm not terribly concerned about people using debug tools to cheat, given there's an instant win button.
--->
 <head>
 
 <title>MooMoo Small Bella</title>
@@ -29,7 +15,7 @@ but this way is easier to debug. I'm not terribly concerned about people using d
 	<br><br>
 	<img src="cow.jpg"/>
 	<br><br>
-	Audio from Bilibili BV1tb4y187Lw by 平凡的144哒.
+	Audio from Bella's TikTok video.
 	<br>
 	Game designed by my daddy Xiangwan.
 	</div>
@@ -46,7 +32,9 @@ but this way is easier to debug. I'm not terribly concerned about people using d
 	<div id="instructions" class="navigation" onclick="viewInstructions()">Instructions</div>
 </div>
 
-<audio src="MyBraveHusband_2.wav"></audio>
+<audio id=Mow_First src="Mow_First.wav"></audio>
+<audio id=Mow_Second src="Mow_Second.wav"></audio>
+<audio id=Mow_Final src="Mow_Final.wav"></audio>
 
 <style>
 body {
@@ -164,7 +152,7 @@ body {
 try {
 	AudioContext = window.AudioContext || window.webkitAudioContext;
 	audioCtx = new AudioContext();
-	audioElement = document.querySelector('audio');
+	audioElement = document.getElementById('Mow_First');
 	track = audioCtx.createMediaElementSource(audioElement);
 	gainNode = audioCtx.createGain();
 	pannerOptions = {pan: 0};
@@ -201,10 +189,10 @@ function hide() {
 	document.getElementById("cocogoat").style.opacity = 0;
 	//resize cocogoat
 	var cocogoatSize = 1.8*0.071*Math.sqrt((document.getElementById('space').clientHeight)*(document.getElementById('space').clientWidth));
-	document.getElementById("cocogoat").style.height = (cocogoatSize+"px");
+	document.getElementById("cocogoat").style.height = (cocogoatSize+"px/2");
 	//resize empty div covering cocogoat
-	document.getElementById("cover").style.height = (cocogoatSize+"px");
-	document.getElementById("cover").style.width = (cocogoatSize+"px");
+	document.getElementById("cover").style.height = (cocogoatSize+"px/2");
+	document.getElementById("cover").style.width = (cocogoatSize+"px/2");
 	//move cocogoat to random location
 	var x = Math.floor(Math.random()*(document.getElementById('space').clientWidth-cocogoatSize));
 	var y = Math.floor(Math.random()*(document.getElementById('space').clientHeight-cocogoatSize));
