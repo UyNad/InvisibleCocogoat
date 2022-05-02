@@ -142,8 +142,12 @@ body {
 // I could use const instead of var, but then try/catch below has restricted scope so I feel like this is functionally more readable
 	var AudioContext;
 	var audioCtx;
-	var audioElement;
-	var track;
+	var audioElement_1;
+	var audioElement_2;
+	var audioElement_3;
+	var track_1;
+	var track_2;
+	var track_3;
 	var gainNode;
 	var pannerOptions;
 	var panner;
@@ -152,8 +156,12 @@ body {
 try {
 	AudioContext = window.AudioContext || window.webkitAudioContext;
 	audioCtx = new AudioContext();
-	audioElement = document.getElementById('Mow_First');
-	track = audioCtx.createMediaElementSource(audioElement);
+	audioElement_1 = document.getElementById('Mow_First');
+	audioElement_2 = document.getElementById('Mow_Second');
+	audioElement_3 = document.getElementById('Mow_Final');
+	track_1 = audioCtx.createMediaElementSource(audioElement_1);
+	track_2 = audioCtx.createMediaElementSource(audioElement_2);
+	track_3 = audioCtx.createMediaElementSource(audioElement_3);
 	gainNode = audioCtx.createGain();
 	pannerOptions = {pan: 0};
 	panner = new StereoPannerNode(audioCtx, pannerOptions);
@@ -241,7 +249,22 @@ function playHint() {
 	panner.pan.value = -1 * Math.sign(xDistance) * Math.sqrt(Math.abs(xDistance)/(document.getElementById('space').clientWidth));
 	//if user has not found cocogoat, play the sound. An event listener elsewhere will loop this function.
 	if (!cocogoatFound) {
-		audioElement.play();
+		if (gainNode.gain.value < 0.15) {
+			//set up audio path
+			track_1.connect(panner).connect(gainNode).connect(audioCtx.destination);
+			audioElement_1.play();
+		}
+		else if (gainNode.gain.value >= 0.15 && gainNode.gain.value < 0.4) {
+			//set up audio path
+			track_2.connect(panner).connect(gainNode).connect(audioCtx.destination);
+			audioElement_2.play();
+		}
+		else {
+			//set up audio path
+			track_3.connect(panner).connect(gainNode).connect(audioCtx.destination);
+			audioElement_3.play();
+		}
+
 	}
 }
 
@@ -307,7 +330,7 @@ function viewInstructions() {
 	if (document.getElementById("promptButton").style.visibility == "visible") {
 		document.getElementById("promptButton").style.visibility = "hidden";
 	} else {
-		let instructions = "My husband is missing with a 1000T hammer and a pan.Could you please help find her by the sound?";
+		let instructions = "My husband is missing with a 1000T-hammer and a pan. Could you help find her by the sound?";
 		document.getElementById("promptButton").innerHTML = instructions;
 		document.getElementById("promptButton").style.visibility = "visible";
 		document.getElementById("promptButton").style.fontSize = "1.2em";
@@ -334,10 +357,14 @@ function updateNumberOfCocogoatsFound() {
 
 //check if user has previously found cocogoats, update banner (runs at page start).
 updateNumberOfCocogoatsFound();
-//set up audio path
-track.connect(panner).connect(gainNode).connect(audioCtx.destination);
+// //set up audio path
+// track_1.connect(panner).connect(gainNode).connect(audioCtx.destination);
+// track_2.connect(panner).connect(gainNode).connect(audioCtx.destination);
+// track_3.connect(panner).connect(gainNode).connect(audioCtx.destination);
 //whenever hint audio finishes, play more hint audio (effectively loop the hint).
-audioElement.addEventListener('ended', playHint);
+audioElement_1.addEventListener('ended', playHint);
+audioElement_2.addEventListener('ended', playHint);
+audioElement_3.addEventListener('ended', playHint);
 //always be tracking where the mouse is because apparently there's no way to do this without events
 document.getElementById("space").addEventListener("mousemove", handleMouseMove);
 
