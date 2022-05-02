@@ -251,17 +251,17 @@ function playHint() {
 	if (!cocogoatFound) {
 		if (gainNode.gain.value < 0.15) {
 			//set up audio path
-			// track_1.connect(panner).connect(gainNode).connect(audioCtx.destination);
+			track_1.connect(panner).connect(gainNode).connect(audioCtx.destination);
 			audioElement_1.play();
 		}
 		else if (gainNode.gain.value >= 0.15 && gainNode.gain.value < 0.4) {
 			//set up audio path
-			// track_2.connect(panner).connect(gainNode).connect(audioCtx.destination);
+			track_2.connect(panner).connect(gainNode).connect(audioCtx.destination);
 			audioElement_2.play();
 		}
 		else {
 			//set up audio path
-			// track_3.connect(panner).connect(gainNode).connect(audioCtx.destination);
+			track_3.connect(panner).connect(gainNode).connect(audioCtx.destination);
 			audioElement_3.play();
 		}
 
@@ -357,10 +357,10 @@ function updateNumberOfCocogoatsFound() {
 
 //check if user has previously found cocogoats, update banner (runs at page start).
 updateNumberOfCocogoatsFound();
-// //set up audio path
-track_1.connect(panner).connect(gainNode).connect(audioCtx.destination);
-track_2.connect(panner).connect(gainNode).connect(audioCtx.destination);
-track_3.connect(panner).connect(gainNode).connect(audioCtx.destination);
+// // //set up audio path
+// track_1.connect(panner).connect(gainNode).connect(audioCtx.destination);
+// track_2.connect(panner).connect(gainNode).connect(audioCtx.destination);
+// track_3.connect(panner).connect(gainNode).connect(audioCtx.destination);
 //whenever hint audio finishes, play more hint audio (effectively loop the hint).
 audioElement_1.addEventListener('ended', playHint);
 audioElement_2.addEventListener('ended', playHint);
